@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fitron_log/features/streak/views/streak_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:pedometer/pedometer.dart';
 
@@ -80,8 +81,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                 ),
                 const SizedBox(width: 12),
-                const Expanded(
+                Expanded(
                   child: StatCard(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => HabitStreakScreen()),
+                      );
+                    },
                     title: 'STREAK',
                     value: '12',
                     unit: 'days',
