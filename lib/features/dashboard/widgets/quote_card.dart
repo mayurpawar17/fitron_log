@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../core/colors/app_colors.dart';
 
-
 class QuoteCard extends StatelessWidget {
   const QuoteCard({super.key});
 
@@ -14,10 +13,7 @@ class QuoteCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.accent),
         gradient: LinearGradient(
-          colors: [
-            AppColors.accent.withOpacity(0.15),
-            Colors.transparent
-          ],
+          colors: [AppColors.accent.withOpacity(0.15), Colors.transparent],
         ),
       ),
       child: Column(
@@ -38,4 +34,3 @@ class QuoteCard extends StatelessWidget {
     );
   }
 }
-

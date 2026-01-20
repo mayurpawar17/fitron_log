@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/colors/app_colors.dart';
+
 class ActionCard extends StatelessWidget {
   const ActionCard({super.key});
 
@@ -19,13 +20,16 @@ class ActionCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Add Progress Photo', style: TextStyle(fontWeight: FontWeight.w600)),
+              Text(
+                'Add Progress Photo',
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
               Text(
                 'Track your visual transformation',
                 style: TextStyle(color: AppColors.textSecondary),
               ),
             ],
-          )
+          ),
         ],
       ),
     );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class ProgressScreen extends StatelessWidget {
   const ProgressScreen({super.key});
 
@@ -21,7 +20,6 @@ class ProgressScreen extends StatelessWidget {
     );
   }
 }
-
 
 class _infoCard extends StatelessWidget {
   final String title;

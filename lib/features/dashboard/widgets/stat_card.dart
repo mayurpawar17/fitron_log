@@ -36,7 +36,10 @@ class StatCard extends StatelessWidget {
               children: [
                 TextSpan(
                   text: value,
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 TextSpan(
                   text: ' $unit',
@@ -52,7 +55,7 @@ class StatCard extends StatelessWidget {
               const SizedBox(width: 4),
               Text(subtitle, style: const TextStyle(fontSize: 12)),
             ],
-          )
+          ),
         ],
       ),
     );

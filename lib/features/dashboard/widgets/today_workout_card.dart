@@ -13,10 +13,7 @@ class TodayWorkoutCard extends StatelessWidget {
         color: AppColors.card,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
-          BoxShadow(
-            color: AppColors.accent.withOpacity(0.25),
-            blurRadius: 24,
-          )
+          BoxShadow(color: AppColors.accent.withOpacity(0.25), blurRadius: 24),
         ],
       ),
       child: Column(
@@ -30,13 +27,16 @@ class TodayWorkoutCard extends StatelessWidget {
               ),
               const Spacer(),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.accent.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: const Text('Pending', style: TextStyle(fontSize: 12)),
-              )
+              ),
             ],
           ),
           const SizedBox(height: 8),
@@ -62,7 +62,7 @@ class TodayWorkoutCard extends StatelessWidget {
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

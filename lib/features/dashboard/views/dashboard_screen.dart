@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:pedometer/pedometer.dart';
 
 import '../../../core/colors/app_colors.dart';
+import '../../../core/helperMethods/permissions.dart';
 import '../widgets/action_card.dart';
 import '../widgets/goal_card.dart';
 import '../widgets/greeting_header.dart';
@@ -8,8 +12,47 @@ import '../widgets/quote_card.dart';
 import '../widgets/stat_card.dart';
 import '../widgets/today_workout_card.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  late StreamSubscription<StepCount> _stepSubscription;
+  int _steps = 0;
+  int _initialSteps = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    requestActivityPermission();
+    initStepCounter();
+  }
+
+  void initStepCounter() {
+    _stepSubscription = Pedometer.stepCountStream.listen(
+      (StepCount event) {
+        if (_initialSteps == 0) {
+          _initialSteps = event.steps;
+        }
+
+        setState(() {
+          _steps = event.steps - _initialSteps;
+        });
+      },
+      onError: (error) {
+        debugPrint("Step counter error: $error");
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _stepSubscription.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,26 +61,26 @@ class DashboardScreen extends StatelessWidget {
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(16),
-          children: const [
-            GreetingHeader(),
-            SizedBox(height: 16),
-            GoalCard(),
-            SizedBox(height: 16),
-            TodayWorkoutCard(),
-            SizedBox(height: 16),
+          children: [
+            const GreetingHeader(),
+            const SizedBox(height: 16),
+            const GoalCard(),
+            const SizedBox(height: 16),
+            const TodayWorkoutCard(),
+            const SizedBox(height: 16),
             Row(
               children: [
                 Expanded(
                   child: StatCard(
-                    title: 'WEIGHT',
-                    value: '75',
-                    unit: 'kg',
-                    subtitle: '-2 kg from start',
+                    title: 'STEPS',
+                    value: '$_steps',
+                    unit: '',
+                    subtitle: '---',
                     icon: Icons.trending_down,
                   ),
                 ),
-                SizedBox(width: 12),
-                Expanded(
+                const SizedBox(width: 12),
+                const Expanded(
                   child: StatCard(
                     title: 'STREAK',
                     value: '12',
@@ -48,10 +91,10 @@ class DashboardScreen extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 16),
-            ActionCard(),
-            SizedBox(height: 16),
-            QuoteCard(),
+            const SizedBox(height: 16),
+            const ActionCard(),
+            const SizedBox(height: 16),
+            const QuoteCard(),
           ],
         ),
       ),
