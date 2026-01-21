@@ -11,7 +11,7 @@ class GreetingHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: const [
         Text(
-          'Hi, Alex 👋',
+          'Hi, Mayur 👋',
           style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 4),

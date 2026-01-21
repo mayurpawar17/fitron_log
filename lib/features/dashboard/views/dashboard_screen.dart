@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fitron_log/features/progress/views/progress_photo_screen.dart';
 import 'package:fitron_log/features/streak/views/streak_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:pedometer/pedometer.dart';
@@ -99,7 +100,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ],
             ),
             const SizedBox(height: 16),
-            const ActionCard(),
+            ActionCard(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => ProgressPhotoScreen()),
+                );
+              },
+            ),
             const SizedBox(height: 16),
             const QuoteCard(),
           ],
