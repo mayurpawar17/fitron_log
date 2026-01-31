@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../progress/widgets/workout_summary_card.dart';
+
 class HabitStreakScreen extends StatefulWidget {
   const HabitStreakScreen({super.key});
 
@@ -37,19 +39,19 @@ class _HabitStreakScreenState extends State<HabitStreakScreen> {
     final streak = calculateStreak();
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Habit Streaks"), centerTitle: true),
+      // appBar: AppBar(title: const Text("Habit Streaks"), centerTitle: true),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             /// 🔥 Streak Counter
-            Text(
-              "🔥 $streak day streak",
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
+            // Text(
+            //   "🔥 $streak day streak",
+            //   style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            // ),
 
-            const SizedBox(height: 16),
+            // const SizedBox(height: 16),
 
             /// 📅 Calendar
             TableCalendar(
@@ -90,6 +92,7 @@ class _HabitStreakScreenState extends State<HabitStreakScreen> {
                 },
               ),
             ),
+            WorkoutSummaryCard(),
           ],
         ),
       ),

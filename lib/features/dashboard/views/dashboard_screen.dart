@@ -85,10 +85,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 Expanded(
                   child: StatCard(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => HabitStreakScreen()),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (_) => HabitStreakScreen()),
+                      // );
                     },
                     title: 'STREAK',
                     value: '12',

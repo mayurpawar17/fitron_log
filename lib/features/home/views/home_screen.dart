@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../main.dart';
 import '../../progress/views/progress_screen.dart';
 import '../../setting/views/settings_screen.dart';
+import '../../streak/views/streak_screen.dart';
 import '../../workout/views/workout_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _screens = const [
     DashboardScreen(),
     WorkoutScreen(),
-    ProgressScreen(),
+    HabitStreakScreen(),
     SettingsScreen(),
   ];
 
