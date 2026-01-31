@@ -1,3 +1,4 @@
+import 'package:fitron_log/features/progress/widgets/workout_summary_card.dart';
 import 'package:flutter/material.dart';
 
 class ProgressScreen extends StatelessWidget {
@@ -10,10 +11,12 @@ class ProgressScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
             _infoCard('Body Weight', '72 → 75 kg'),
             SizedBox(height: 16),
             _infoCard('Strength', 'Bench Press ↑'),
+            WorkoutSummaryCard(),
           ],
         ),
       ),

@@ -99,3 +99,4 @@ class _ProgressPhotoScreenState extends State<ProgressPhotoScreen> {
     );
   }
 }
+

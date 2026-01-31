@@ -7,6 +7,7 @@ class WorkoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
@@ -103,8 +104,13 @@ class ExerciseCard extends StatelessWidget {
           const SizedBox(height: 8),
 
           /// Sets
-          const WorkoutSetRow(set: '1', weight: '60', reps: '10'),
-          const WorkoutSetRow(set: '2', weight: '65', reps: '8'),
+          WorkoutSetRow(set: 1, weight: '60', reps: '10'),
+          WorkoutSetRow(
+            set: 2,
+            weight: '80',
+            reps: '8',
+            isPR: true, // 🏆 Personal Record
+          ),
 
           const SizedBox(height: 12),
 
@@ -126,41 +132,81 @@ class ExerciseCard extends StatelessWidget {
 }
 
 class WorkoutSetRow extends StatelessWidget {
-  final String set;
+  final int set;
   final String weight;
   final String reps;
+  final bool isPR;
 
   const WorkoutSetRow({
     super.key,
     required this.set,
     required this.weight,
     required this.reps,
+    this.isPR = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(child: Text(set)),
-        Expanded(
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: weight,
-              border: InputBorder.none,
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        children: [
+          /// Set Number
+          Expanded(
+            child: Text(
+              '$set',
+              style: const TextStyle(fontWeight: FontWeight.w500),
             ),
-            keyboardType: TextInputType.number,
           ),
-        ),
-        Expanded(
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: reps,
-              border: InputBorder.none,
+
+          /// Weight
+          Expanded(
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: weight,
+                border: InputBorder.none,
+              ),
+              keyboardType: TextInputType.number,
             ),
-            keyboardType: TextInputType.number,
           ),
-        ),
-      ],
+
+          /// Reps
+          Expanded(
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: reps,
+                border: InputBorder.none,
+              ),
+              keyboardType: TextInputType.number,
+            ),
+          ),
+
+          /// PR Badge
+          if (isPR)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.amber.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                children: const [
+                  Icon(Icons.emoji_events, size: 14, color: Colors.amber),
+                  SizedBox(width: 4),
+                  Text(
+                    'PR',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.amber,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+        ],
+      ),
     );
   }
 }
