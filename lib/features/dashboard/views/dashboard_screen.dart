@@ -7,6 +7,7 @@ import 'package:pedometer/pedometer.dart';
 
 import '../../../core/colors/app_colors.dart';
 import '../../../core/helperMethods/permissions.dart';
+import '../../progress_photos/views/progress_photo_screen.dart';
 import '../widgets/action_card.dart';
 import '../widgets/goal_card.dart';
 import '../widgets/greeting_header.dart';
