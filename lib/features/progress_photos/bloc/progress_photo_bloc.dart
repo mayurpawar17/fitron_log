@@ -4,8 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../data/repo/progress_photo_repository.dart';
 
-class ProgressPhotoBloc
-    extends Bloc<ProgressPhotoEvent, ProgressPhotoState> {
+class ProgressPhotoBloc extends Bloc<ProgressPhotoEvent, ProgressPhotoState> {
   final ProgressPhotoRepository repo = ProgressPhotoRepository();
 
   ProgressPhotoBloc() : super(ProgressPhotoLoading()) {

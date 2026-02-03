@@ -10,24 +10,23 @@ class AddProgressPhotoSheet extends StatefulWidget {
   const AddProgressPhotoSheet({super.key});
 
   @override
-  State<AddProgressPhotoSheet> createState() =>
-      _AddProgressPhotoSheetState();
+  State<AddProgressPhotoSheet> createState() => _AddProgressPhotoSheetState();
 }
 
 class _AddProgressPhotoSheetState extends State<AddProgressPhotoSheet> {
   String? front, side, back;
 
   Future<String?> _pickImage() async {
-    final image =
-    await ImagePicker().pickImage(source: ImageSource.camera);
+    final image = await ImagePicker().pickImage(source: ImageSource.camera);
     return image?.path;
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-      EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
       child: Container(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -50,20 +49,20 @@ class _AddProgressPhotoSheetState extends State<AddProgressPhotoSheet> {
               onPressed: front == null && side == null && back == null
                   ? null
                   : () {
-                context.read<ProgressPhotoBloc>().add(
-                  AddProgressPhoto(
-                    ProgressPhoto(
-                      date: DateTime.now(),
-                      frontPath: front,
-                      sidePath: side,
-                      backPath: back,
-                    ),
-                  ),
-                );
-                Navigator.pop(context);
-              },
+                      context.read<ProgressPhotoBloc>().add(
+                        AddProgressPhoto(
+                          ProgressPhoto(
+                            date: DateTime.now(),
+                            frontPath: front,
+                            sidePath: side,
+                            backPath: back,
+                          ),
+                        ),
+                      );
+                      Navigator.pop(context);
+                    },
               child: const Text('Save'),
-            )
+            ),
           ],
         ),
       ),

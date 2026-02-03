@@ -1,4 +1,3 @@
-
 import '../db/progress_photo_db.dart';
 import '../model/progress_photo.dart';
 
@@ -7,10 +6,7 @@ class ProgressPhotoRepository {
 
   Future<List<ProgressPhoto>> getAll() async {
     final db = await dbProvider.database;
-    final result = await db.query(
-      'progress_photos',
-      orderBy: 'date DESC',
-    );
+    final result = await db.query('progress_photos', orderBy: 'date DESC');
 
     return result.map((e) => ProgressPhoto.fromMap(e)).toList();
   }
@@ -22,10 +18,6 @@ class ProgressPhotoRepository {
 
   Future<void> delete(int id) async {
     final db = await dbProvider.database;
-    await db.delete(
-      'progress_photos',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    await db.delete('progress_photos', where: 'id = ?', whereArgs: [id]);
   }
 }

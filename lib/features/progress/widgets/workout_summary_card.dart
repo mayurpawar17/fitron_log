@@ -28,8 +28,10 @@ class WorkoutSummaryCard extends StatelessWidget {
           Row(
             children: [
               Container(
-                padding:
-                const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: const Color(0xFF2EE6A6).withOpacity(0.15),
                   borderRadius: BorderRadius.circular(20),
@@ -107,10 +109,7 @@ class WorkoutSummaryCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 14),
             decoration: BoxDecoration(
               gradient: const LinearGradient(
-                colors: [
-                  Color(0xFF2EE6A6),
-                  Color(0xFF1DBF84),
-                ],
+                colors: [Color(0xFF2EE6A6), Color(0xFF1DBF84)],
               ),
               borderRadius: BorderRadius.circular(24),
             ),
@@ -139,10 +138,7 @@ class WorkoutSummaryCard extends StatelessWidget {
             flex: 2,
             child: Text(
               exercise,
-              style: const TextStyle(
-                color: Colors.black87,
-                height: 1.4,
-              ),
+              style: const TextStyle(color: Colors.black87, height: 1.4),
             ),
           ),
           Expanded(

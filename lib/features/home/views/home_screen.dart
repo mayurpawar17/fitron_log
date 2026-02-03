@@ -6,6 +6,7 @@ import '../../progress/views/progress_screen.dart';
 import '../../setting/views/settings_screen.dart';
 import '../../streak/views/streak_screen.dart';
 import '../../workout/views/workout_screen.dart';
+import '../../workout/views/workout_screen2.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

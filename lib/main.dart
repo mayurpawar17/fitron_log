@@ -1,4 +1,6 @@
 import 'package:fitron_log/features/progress_photos/bloc/progress_photo_bloc.dart';
+import 'package:fitron_log/features/workout/bloc/workout_bloc.dart';
+import 'package:fitron_log/features/workout/data/repo/workout_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,14 +8,15 @@ import './features/home/views/home_screen.dart';
 
 void main() {
   runApp(
-    BlocProvider(
-      create: (_) => ProgressPhotoBloc(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => ProgressPhotoBloc()),
+        BlocProvider(create: (_) => WorkoutBloc(WorkoutRepository())),
+      ],
       child: const MyApp(),
     ),
   );
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
