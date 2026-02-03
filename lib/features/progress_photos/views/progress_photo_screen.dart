@@ -1,82 +1,118 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/progress_photo_bloc.dart';
-import '../bloc/progress_photo_state.dart';
+import '../data/db/progress_photo_db.dart';
+import '../data/model/progress_photo.dart';
 import 'add_progress_photo_sheet.dart';
 import 'compare_photos_screen.dart';
 
-class ProgressPhotoScreen extends StatelessWidget {
+class ProgressPhotoScreen extends StatefulWidget {
   const ProgressPhotoScreen({super.key});
+
+  @override
+  State<ProgressPhotoScreen> createState() => _ProgressPhotoScreenState();
+}
+
+class _ProgressPhotoScreenState extends State<ProgressPhotoScreen> {
+  List<ProgressPhoto> photos = [];
+
+  @override
+  void initState() {
+    super.initState();
+    load();
+  }
+
+  Future<void> load() async {
+    photos = await ProgressPhotoDB.instance.getAll();
+    setState(() {});
+  }
+
+  Widget imageBox(String? path) {
+    return Expanded(
+      child: Container(
+        height: 100,
+        margin: const EdgeInsets.only(right: 8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(14),
+          color: Colors.grey.shade200,
+        ),
+        child: path == null
+            ? const Icon(Icons.camera_alt_outlined)
+            : ClipRRect(
+                borderRadius: BorderRadius.circular(14),
+                child: Image.file(File(path), fit: BoxFit.cover),
+              ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Progress Photos'),
+        title: const Text("Progress Photos"),
         actions: [
           IconButton(
             icon: const Icon(Icons.compare),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const ComparePhotosScreen()),
-              );
-            },
+            onPressed: photos.length < 2
+                ? null
+                : () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ComparePhotosScreen(photos: photos),
+                      ),
+                    );
+                  },
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-          ),
-          builder: (_) => const AddProgressPhotoSheet(),
-        ),
         child: const Icon(Icons.add_a_photo),
+        onPressed: () async {
+          await showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+            ),
+            builder: (_) => AddProgressPhotoSheet(onSaved: load),
+          );
+        },
       ),
-      body: BlocBuilder<ProgressPhotoBloc, ProgressPhotoState>(
-        builder: (context, state) {
-          if (state is ProgressPhotoLoaded) {
-            if (state.photos.isEmpty) {
-              return const Center(
-                child: Text(
-                  'Add your first progress photo 📸',
-                  style: TextStyle(fontSize: 16),
-                ),
-              );
-            }
-
-            return ListView.builder(
+      body: photos.isEmpty
+          ? const Center(
+              child: Text(
+                "Add your first progress photo 📸",
+                style: TextStyle(fontSize: 16),
+              ),
+            )
+          : ListView.builder(
               padding: const EdgeInsets.all(16),
-              itemCount: state.photos.length,
+              itemCount: photos.length,
               itemBuilder: (_, i) {
-                final photo = state.photos[i];
-
+                final p = photos[i];
                 return Card(
-                  margin: const EdgeInsets.only(bottom: 16),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(18),
                   ),
+                  margin: const EdgeInsets.only(bottom: 16),
                   child: Padding(
                     padding: const EdgeInsets.all(12),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${photo.date.toLocal()}'.split(' ')[0],
+                          p.date.toLocal().toString().split(' ')[0],
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 12),
                         Row(
                           children: [
-                            _image(photo.frontPath),
-                            _image(photo.sidePath),
-                            _image(photo.backPath),
+                            imageBox(p.front),
+                            imageBox(p.side),
+                            imageBox(p.back),
                           ],
                         ),
                       ],
@@ -84,31 +120,7 @@ class ProgressPhotoScreen extends StatelessWidget {
                   ),
                 );
               },
-            );
-          }
-
-          return const Center(child: CircularProgressIndicator());
-        },
-      ),
-    );
-  }
-
-  Widget _image(String? path) {
-    return Expanded(
-      child: Container(
-        height: 100,
-        margin: const EdgeInsets.only(right: 8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: Colors.grey.shade200,
-        ),
-        child: path == null
-            ? const Icon(Icons.camera_alt_outlined)
-            : ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.file(File(path), fit: BoxFit.cover),
-              ),
-      ),
+            ),
     );
   }
 }

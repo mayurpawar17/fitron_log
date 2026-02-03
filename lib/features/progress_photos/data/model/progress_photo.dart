@@ -1,28 +1,25 @@
 class ProgressPhoto {
   final int? id;
   final DateTime date;
-  final String? frontPath;
-  final String? sidePath;
-  final String? backPath;
-  final String? note;
+  final String? front;
+  final String? side;
+  final String? back;
 
   ProgressPhoto({
     this.id,
     required this.date,
-    this.frontPath,
-    this.sidePath,
-    this.backPath,
-    this.note,
+    this.front,
+    this.side,
+    this.back,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'date': date.toIso8601String(),
-      'front_path': frontPath,
-      'side_path': sidePath,
-      'back_path': backPath,
-      'note': note,
+      'front': front,
+      'side': side,
+      'back': back,
     };
   }
 
@@ -30,10 +27,9 @@ class ProgressPhoto {
     return ProgressPhoto(
       id: map['id'],
       date: DateTime.parse(map['date']),
-      frontPath: map['front_path'],
-      sidePath: map['side_path'],
-      backPath: map['back_path'],
-      note: map['note'],
+      front: map['front'],
+      side: map['side'],
+      back: map['back'],
     );
   }
 }

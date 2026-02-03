@@ -6,22 +6,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/progress_photo_bloc.dart';
 import '../bloc/progress_photo_state.dart';
+import '../data/model/progress_photo.dart';
 
 class ComparePhotosScreen extends StatelessWidget {
-  const ComparePhotosScreen({super.key});
+  final List<ProgressPhoto> photos;
+
+  const ComparePhotosScreen({super.key, required this.photos});
+
 
   @override
   Widget build(BuildContext context) {
-    final state = context.read<ProgressPhotoBloc>().state;
 
-    if (state is! ProgressPhotoLoaded || state.photos.length < 2) {
-      return const Scaffold(
-        body: Center(child: Text('Not enough photos to compare')),
-      );
-    }
 
-    final before = state.photos.last.frontPath!;
-    final after = state.photos.first.frontPath!;
+    final before = photos.last.front!;
+    final after = photos.first.front!;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Before vs After')),

@@ -1,79 +1,76 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../bloc/progress_photo_bloc.dart';
-import '../bloc/progress_photo_event.dart';
+
+import '../data/db/progress_photo_db.dart';
 import '../data/model/progress_photo.dart';
 
 class AddProgressPhotoSheet extends StatefulWidget {
-  const AddProgressPhotoSheet({super.key});
+  final VoidCallback onSaved;
+  const AddProgressPhotoSheet({super.key, required this.onSaved});
 
   @override
-  State<AddProgressPhotoSheet> createState() => _AddProgressPhotoSheetState();
+  State<AddProgressPhotoSheet> createState() =>
+      _AddProgressPhotoSheetState();
 }
 
 class _AddProgressPhotoSheetState extends State<AddProgressPhotoSheet> {
   String? front, side, back;
 
-  Future<String?> _pickImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
-    return image?.path;
+  Future pick(Function(String) onPick) async {
+    final img =
+    await ImagePicker().pickImage(source: ImageSource.camera);
+    if (img != null) {
+      onPick(img.path);
+      setState(() {});
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom,
-      ),
-      child: Container(
+      padding:
+      EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _btn('Capture Front', () async {
-              front = await _pickImage();
-              setState(() {});
-            }),
-            _btn('Capture Side', () async {
-              side = await _pickImage();
-              setState(() {});
-            }),
-            _btn('Capture Back', () async {
-              back = await _pickImage();
-              setState(() {});
-            }),
-            const SizedBox(height: 20),
+            ListTile(
+              leading: const Icon(Icons.camera_alt),
+              title: const Text("Capture Front"),
+              onTap: () => pick((v) => front = v),
+            ),
+            ListTile(
+              leading: const Icon(Icons.camera_alt),
+              title: const Text("Capture Side"),
+              onTap: () => pick((v) => side = v),
+            ),
+            ListTile(
+              leading: const Icon(Icons.camera_alt),
+              title: const Text("Capture Back"),
+              onTap: () => pick((v) => back = v),
+            ),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: front == null && side == null && back == null
                   ? null
-                  : () {
-                      context.read<ProgressPhotoBloc>().add(
-                        AddProgressPhoto(
-                          ProgressPhoto(
-                            date: DateTime.now(),
-                            frontPath: front,
-                            sidePath: side,
-                            backPath: back,
-                          ),
-                        ),
-                      );
-                      Navigator.pop(context);
-                    },
-              child: const Text('Save'),
-            ),
+                  : () async {
+                await ProgressPhotoDB.instance.insert(
+                  ProgressPhoto(
+                    date: DateTime.now(),
+                    front: front,
+                    side: side,
+                    back: back,
+                  ),
+                );
+                widget.onSaved();
+                Navigator.pop(context);
+              },
+              child: const Text("Save"),
+            )
           ],
         ),
       ),
-    );
-  }
-
-  Widget _btn(String text, VoidCallback onTap) {
-    return ListTile(
-      leading: const Icon(Icons.camera_alt),
-      title: Text(text),
-      onTap: onTap,
     );
   }
 }

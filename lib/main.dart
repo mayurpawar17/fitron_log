@@ -1,4 +1,3 @@
-import 'package:fitron_log/features/progress_photos/bloc/progress_photo_bloc.dart';
 import 'package:fitron_log/features/workout/bloc/workout_bloc.dart';
 import 'package:fitron_log/features/workout/data/repo/workout_repository.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,6 @@ void main() {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => ProgressPhotoBloc()),
         BlocProvider(create: (_) => WorkoutBloc(WorkoutRepository())),
       ],
       child: const MyApp(),
