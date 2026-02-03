@@ -40,60 +40,62 @@ class _HabitStreakScreenState extends State<HabitStreakScreen> {
 
     return Scaffold(
       // appBar: AppBar(title: const Text("Habit Streaks"), centerTitle: true),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            /// 🔥 Streak Counter
-            // Text(
-            //   "🔥 $streak day streak",
-            //   style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            // ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /// 🔥 Streak Counter
+              // Text(
+              //   "🔥 $streak day streak",
+              //   style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              // ),
 
-            // const SizedBox(height: 16),
+              // const SizedBox(height: 16),
 
-            /// 📅 Calendar
-            TableCalendar(
-              firstDay: DateTime.utc(2024, 1, 1),
-              lastDay: DateTime.utc(2030, 12, 31),
-              focusedDay: DateTime.now(),
-              headerStyle: const HeaderStyle(
-                formatButtonVisible: false,
-                titleCentered: true,
-              ),
+              /// 📅 Calendar
+              TableCalendar(
+                firstDay: DateTime.utc(2024, 1, 1),
+                lastDay: DateTime.utc(2030, 12, 31),
+                focusedDay: DateTime.now(),
+                headerStyle: const HeaderStyle(
+                  formatButtonVisible: false,
+                  titleCentered: true,
+                ),
 
-              calendarBuilders: CalendarBuilders(
-                defaultBuilder: (context, day, _) {
-                  final date = normalize(day);
-                  final completed = completedDays[date] ?? false;
+                calendarBuilders: CalendarBuilders(
+                  defaultBuilder: (context, day, _) {
+                    final date = normalize(day);
+                    final completed = completedDays[date] ?? false;
 
-                  return GestureDetector(
-                    onTap: () => toggleDay(day),
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 250),
-                      margin: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: completed
-                            ? Colors.greenAccent
-                            : Colors.grey.shade800,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "${day.day}",
-                        style: TextStyle(
-                          color: completed ? Colors.black : Colors.white,
-                          fontWeight: FontWeight.w600,
+                    return GestureDetector(
+                      onTap: () => toggleDay(day),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 250),
+                        margin: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: completed
+                              ? Colors.greenAccent
+                              : Colors.grey.shade800,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          "${day.day}",
+                          style: TextStyle(
+                            color: completed ? Colors.black : Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
-            WorkoutSummaryCard(),
-          ],
+              WorkoutSummaryCard(),
+            ],
+          ),
         ),
       ),
     );

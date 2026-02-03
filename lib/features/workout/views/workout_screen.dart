@@ -1,78 +1,158 @@
-// import 'package:flutter/material.dart';
-//
-// class WorkoutScreen extends StatelessWidget {
-//   const WorkoutScreen({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         surfaceTintColor: Colors.transparent,
-//         title: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: const [
-//             Text('Today’s Workout'),
-//             SizedBox(height: 4),
-//             Text(
-//               'Chest & Triceps • 45 min',
-//               style: TextStyle(fontSize: 12, color: Colors.grey),
-//             ),
-//           ],
-//         ),
-//       ),
-//
-//       body: ListView(
-//         padding: const EdgeInsets.all(16),
-//         children: [
-//           Theme(
-//             data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-//             child: ExpansionTile(
-//               title: Text('Bench Press'),
-//               children: [ExerciseCard(exerciseName: 'Bench Press')],
-//             ),
-//           ),
-//
-//           Theme(
-//             data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-//             child: ExpansionTile(
-//               title: Text('Leg Press'),
-//               children: [ExerciseCard(exerciseName: 'Bench Press')],
-//             ),
-//           ),
-//
-//         ],
-//       ),
-//
-//       floatingActionButton: FloatingActionButton.extended(
-//         onPressed: () {},
-//         icon: const Icon(Icons.add),
-//         label: const Text('Add Exercise'),
-//       ),
-//
-//       // bottomNavigationBar: Padding(
-//       //   padding: const EdgeInsets.all(16),
-//       //   child: ElevatedButton(
-//       //     onPressed: () {},
-//       //     style: ElevatedButton.styleFrom(
-//       //       padding: const EdgeInsets.symmetric(vertical: 16),
-//       //       shape: RoundedRectangleBorder(
-//       //         borderRadius: BorderRadius.circular(16),
-//       //       ),
-//       //     ),
-//       //     child: const Text('Save Workout', style: TextStyle(fontSize: 16)),
-//       //   ),
-//       // ),
-//     );
-//   }
-// }
-//
+import 'package:fitron_log/features/workout/views/workout_history_screen.dart';
+import 'package:flutter/material.dart';
+
+import '../data/db/workout_db.dart';
+import '../data/model/exercise_model.dart';
+
+class WorkoutScreen extends StatefulWidget {
+  const WorkoutScreen({super.key});
+
+  @override
+  State<WorkoutScreen> createState() => _WorkoutScreenState();
+}
+
+class _WorkoutScreenState extends State<WorkoutScreen> {
+  final List<Exercise> exercises = [];
+
+  void addExercise() {
+    setState(() {
+      exercises.add(
+        Exercise(
+          name: 'Exercise ${exercises.length + 1}',
+          sets: [WorkoutSet(weight: 60, reps: 10)],
+        ),
+      );
+    });
+  }
+
+  void addSet(int exerciseIndex) {
+    setState(() {
+      exercises[exerciseIndex].sets.add(WorkoutSet(weight: 0, reps: 0));
+    });
+  }
+
+  Future<void> saveWorkout() async {
+    final db = await WorkoutDB.instance.database;
+
+    final workoutId = await db.insert('workouts', {
+      'date': DateTime.now().toIso8601String(),
+      'notes': '',
+    });
+
+    for (final ex in exercises) {
+      final exId = await db.insert('exercises', {
+        'workout_id': workoutId,
+        'name': ex.name,
+      });
+
+      for (final set in ex.sets) {
+        await db.insert('sets', {
+          'exercise_id': exId,
+          'weight': set.weight,
+          'reps': set.reps,
+        });
+      }
+    }
+
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Workout saved 💪')));
+
+    setState(() => exercises.clear());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Text('Today’s Workout'),
+            SizedBox(height: 4),
+            Text(
+              'Chest & Triceps • 45 min',
+              style: TextStyle(fontSize: 12, color: Colors.grey),
+            ),
+          ],
+        ),
+
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.history),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const WorkoutHistoryScreen(),
+                ),
+              );
+            },
+          ),
+        ],
+
+      ),
+
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          ...exercises.asMap().entries.map((entry) {
+            final index = entry.key;
+            final exercise = entry.value;
+
+            return Theme(
+              data: Theme.of(context)
+                  .copyWith(dividerColor: Colors.transparent),
+              child: ExpansionTile(
+                title: Text(exercise.name),
+                children: [
+                  ExerciseCard(
+                    exercise: exercise,
+                    onAddSet: () => addSet(index),
+                    onChanged: () => setState(() {}),
+                  ),
+                ],
+              ),
+            );
+          }),
+          const SizedBox(height: 80),
+        ],
+      ),
+
+
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: addExercise,
+        icon: const Icon(Icons.add),
+        label: const Text('Add Exercise'),
+      ),
+
+
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(16),
+        child: ElevatedButton(
+          onPressed: exercises.isEmpty ? null : saveWorkout,
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+          ),
+          child: const Text(
+            'Save Workout',
+            style: TextStyle(fontSize: 16),
+          ),
+        ),
+      ),
+
+    );
+  }
+}
+
 // class ExerciseCard extends StatelessWidget {
 //   final String exerciseName;
 //
-//   const ExerciseCard({
-//     super.key,
-//     required this.exerciseName,
-//   });
+//   const ExerciseCard({super.key, required this.exerciseName});
 //
 //   @override
 //   Widget build(BuildContext context) {
@@ -121,27 +201,18 @@
 //             children: const [
 //               SizedBox(
 //                 width: 32,
-//                 child: Text(
-//                   'Set',
-//                   style: TextStyle(color: Colors.grey),
+//                 child: Text('Set', style: TextStyle(color: Colors.grey)),
+//               ),
+//               SizedBox(width: 8),
+//               Expanded(
+//                 child: Center(
+//                   child: Text('Kg', style: TextStyle(color: Colors.grey)),
 //                 ),
 //               ),
 //               SizedBox(width: 8),
 //               Expanded(
 //                 child: Center(
-//                   child: Text(
-//                     'Kg',
-//                     style: TextStyle(color: Colors.grey),
-//                   ),
-//                 ),
-//               ),
-//               SizedBox(width: 8),
-//               Expanded(
-//                 child: Center(
-//                   child: Text(
-//                     'Reps',
-//                     style: TextStyle(color: Colors.grey),
-//                   ),
+//                   child: Text('Reps', style: TextStyle(color: Colors.grey)),
 //                 ),
 //               ),
 //               SizedBox(width: 8),
@@ -159,12 +230,7 @@
 //           const SizedBox(height: 8),
 //
 //           /// SET ROWS
-//           const WorkoutSetRow(
-//             set: 1,
-//             weight: '60',
-//             reps: '10',
-//             prev: '4×65',
-//           ),
+//           const WorkoutSetRow(set: 1, weight: '60', reps: '10', prev: '4×65'),
 //           const WorkoutSetRow(
 //             set: 2,
 //             weight: '80',
@@ -197,7 +263,117 @@
 //     );
 //   }
 // }
-//
+
+class ExerciseCard extends StatelessWidget {
+  final Exercise exercise;
+  final VoidCallback onAddSet;
+  final VoidCallback onChanged;
+
+  const ExerciseCard({
+    super.key,
+    required this.exercise,
+    required this.onAddSet,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    const accent = Color(0xFF1DBF84);
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /// SETS
+          ...exercise.sets.asMap().entries.map((entry) {
+            final index = entry.key;
+            final set = entry.value;
+
+            return WorkoutSetRow(
+              set: index + 1,
+              onWeightChanged: (v) {
+                set.weight = int.tryParse(v) ?? 0;
+                onChanged();
+              },
+              onRepsChanged: (v) {
+                set.reps = int.tryParse(v) ?? 0;
+                onChanged();
+              },
+            );
+          }),
+
+          const SizedBox(height: 16),
+
+          /// ADD SET
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: onAddSet,
+              icon: const Icon(Icons.add),
+              label: const Text('Add Set'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class WorkoutSetRow extends StatelessWidget {
+  final int set;
+  final ValueChanged<String> onWeightChanged;
+  final ValueChanged<String> onRepsChanged;
+
+  const WorkoutSetRow({
+    super.key,
+    required this.set,
+    required this.onWeightChanged,
+    required this.onRepsChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        children: [
+          SizedBox(width: 32, child: Text('$set')),
+
+          const SizedBox(width: 8),
+
+          Expanded(
+            child: TextField(
+              keyboardType: TextInputType.number,
+              textAlign: TextAlign.center,
+              decoration: const InputDecoration(hintText: 'Kg'),
+              onChanged: onWeightChanged,
+            ),
+          ),
+
+          const SizedBox(width: 8),
+
+          Expanded(
+            child: TextField(
+              keyboardType: TextInputType.number,
+              textAlign: TextAlign.center,
+              decoration: const InputDecoration(hintText: 'Reps'),
+              onChanged: onRepsChanged,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+
 // class WorkoutSetRow extends StatelessWidget {
 //   final int set;
 //   final String weight;

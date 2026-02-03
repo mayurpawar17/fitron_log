@@ -1,26 +1,16 @@
-class ExerciseSet {
-  int reps;
-  double weight;
-
-  ExerciseSet({required this.reps, required this.weight});
-
-  Map<String, dynamic> toMap(int exerciseId) => {
-    'exercise_id': exerciseId,
-    'reps': reps,
-    'weight': weight,
-  };
-}
-
 class Exercise {
   String name;
-  List<ExerciseSet> sets;
-  String? note;
-  int restSeconds;
+  List<WorkoutSet> sets;
 
   Exercise({
     required this.name,
     required this.sets,
-    this.note,
-    this.restSeconds = 60,
   });
+}
+
+class WorkoutSet {
+  int weight;
+  int reps;
+
+  WorkoutSet({this.weight = 0, this.reps = 0});
 }

@@ -5,8 +5,8 @@ import 'workout_event.dart';
 import 'workout_state.dart';
 
 class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
-  final WorkoutRepository repo;
-  WorkoutBloc(this.repo) : super(WorkoutEditing([])) {
+  // final WorkoutRepository repo;
+  WorkoutBloc() : super(WorkoutEditing([])) {
     on<AddExercise>((e, emit) {
       final current = state as WorkoutEditing;
       emit(WorkoutEditing([...current.exercises, e.exercise]));
@@ -28,9 +28,9 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
 
       emit(WorkoutSaving());
 
-      await repo.saveWorkout(
-        Workout(date: DateTime.now(), exercises: current.exercises),
-      );
+      // await repo.saveWorkout(
+      //   Workout(date: DateTime.now(), exercises: current.exercises),
+      // );
 
       emit(WorkoutSaved());
       emit(WorkoutEditing([])); // reset for next workout

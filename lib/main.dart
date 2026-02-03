@@ -1,19 +1,10 @@
-import 'package:fitron_log/features/workout/bloc/workout_bloc.dart';
-import 'package:fitron_log/features/workout/data/repo/workout_repository.dart';
+import 'package:fitron_log/features/workout/views/add_workout_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import './features/home/views/home_screen.dart';
 
 void main() {
-  runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => WorkoutBloc(WorkoutRepository())),
-      ],
-      child: const MyApp(),
-    ),
-  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
