@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/settings_section.dart';
 import '../widgets/settings_tile.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -8,101 +9,134 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings'), centerTitle: true),
-      body: ListView(
+      appBar: AppBar(title: const Text("Profile")),
+      body: Padding(
         padding: const EdgeInsets.all(16),
-        children: [
-          /// Profile Card
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              color: Theme.of(context).cardColor,
+        child: ListView(
+          children: [
+            ProfileHeaderCard(
+              name: "Ronald Richards",
+              email: "ronaldrichards@gmail.com",
+              imageUrl: "https://i.pravatar.cc/150?img=3",
             ),
-            child: Row(
+
+            const SizedBox(height: 24),
+            SettingsSection(
+              title: "Fitness",
               children: [
-                const CircleAvatar(
-                  radius: 28,
-                  child: Icon(Icons.person, size: 32),
+                SettingsTile(icon: Icons.flag_outlined, title: "Fitness Goals"),
+                SettingsTile(icon: Icons.fitness_center, title: "Workout Plan"),
+                SettingsTile(
+                  icon: Icons.photo_camera_outlined,
+                  title: "Progress Photos",
                 ),
-                const SizedBox(width: 12),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                      'Mayur Pawar',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    SizedBox(height: 4),
-                    Text('View Profile', style: TextStyle(color: Colors.grey)),
-                  ],
+                SettingsTile(
+                  icon: Icons.monitor_weight_outlined,
+                  title: "Body Measurements",
                 ),
-                const Spacer(),
-                const Icon(Icons.arrow_forward_ios, size: 16),
+                SettingsTile(
+                  icon: Icons.alarm_outlined,
+                  title: "Workout Reminders",
+                ),
               ],
             ),
-          ),
 
-          const SizedBox(height: 24),
+            const SizedBox(height: 24),
 
-          /// Preferences Section
-          const Text(
-            'Preferences',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: Colors.grey,
+            SettingsSection(
+              title: "Account",
+              children: [
+                SettingsTile(
+                  icon: Icons.person_outline,
+                  title: "Manage Profile",
+                  onTap: () {},
+                ),
+                SettingsTile(
+                  icon: Icons.lock_outline,
+                  title: "Password & Security",
+                  onTap: () {},
+                ),
+                SettingsTile(
+                  icon: Icons.notifications_none,
+                  title: "Notifications",
+                  onTap: () {},
+                ),
+                SettingsTile(
+                  icon: Icons.language,
+                  title: "Language",
+                  trailingText: "English",
+                  onTap: () {},
+                ),
+              ],
             ),
-          ),
-          const SizedBox(height: 12),
 
-          SettingsTile(
-            icon: Icons.notifications,
-            title: 'Notifications',
-            onTap: () {},
-          ),
-          SettingsTile(
-            icon: Icons.dark_mode,
-            title: 'Dark Mode',
-            trailing: Switch(value: true, onChanged: (value) {}),
-          ),
+            const SizedBox(height: 24),
 
-          const SizedBox(height: 24),
-
-          /// Account Section
-          const Text(
-            'Account',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: Colors.grey,
+            SettingsSection(
+              title: "Preferences",
+              children: [
+                SettingsTile(
+                  icon: Icons.info_outline,
+                  title: "About Us",
+                  onTap: () {},
+                ),
+                SettingsTile(
+                  icon: Icons.dark_mode_outlined,
+                  title: "Theme",
+                  trailingText: "Light",
+                  onTap: () {},
+                ),
+                SettingsTile(
+                  icon: Icons.calendar_today_outlined,
+                  title: "Appointments",
+                  onTap: () {},
+                ),
+              ],
             ),
-          ),
-          const SizedBox(height: 12),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
-          SettingsTile(
-            icon: Icons.privacy_tip,
-            title: 'Privacy Policy',
-            onTap: () {},
-          ),
-          SettingsTile(
-            icon: Icons.help_outline,
-            title: 'Help & Support',
-            onTap: () {},
-          ),
+class ProfileHeaderCard extends StatelessWidget {
+  final String name;
+  final String email;
+  final String imageUrl;
 
-          const SizedBox(height: 24),
+  const ProfileHeaderCard({
+    super.key,
+    required this.name,
+    required this.email,
+    required this.imageUrl,
+  });
 
-          /// Logout
-          SettingsTile(
-            icon: Icons.logout,
-            title: 'Logout',
-            titleColor: Colors.red,
-            iconColor: Colors.red,
-            onTap: () {},
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(18),
+      ),
+      child: Row(
+        children: [
+          CircleAvatar(radius: 28, backgroundImage: NetworkImage(imageUrl)),
+          const SizedBox(width: 12),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                name,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(email, style: Theme.of(context).textTheme.bodySmall),
+            ],
           ),
         ],
       ),

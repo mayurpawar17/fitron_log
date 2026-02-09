@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/colors/app_colors.dart';
+import '../../../core/theme/app_colors.dart';
 
 class QuoteCard extends StatelessWidget {
   const QuoteCard({super.key});

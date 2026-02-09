@@ -47,9 +47,7 @@ class WorkoutDB {
       },
       onUpgrade: (db, oldVersion, newVersion) async {
         if (oldVersion < 2) {
-          await db.execute(
-            'ALTER TABLE workouts ADD COLUMN notes TEXT',
-          );
+          await db.execute('ALTER TABLE workouts ADD COLUMN notes TEXT');
         }
       },
     );
@@ -70,7 +68,4 @@ class WorkoutDB {
     ORDER BY w.date DESC
   ''');
   }
-
-
-
 }

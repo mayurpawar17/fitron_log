@@ -3,37 +3,43 @@ import 'package:flutter/material.dart';
 class SettingsTile extends StatelessWidget {
   final IconData icon;
   final String title;
-  final Widget? trailing;
+  final String? trailingText;
   final VoidCallback? onTap;
-  final Color? titleColor;
-  final Color? iconColor;
 
   const SettingsTile({
     super.key,
     required this.icon,
     required this.title,
-    this.trailing,
+    this.trailingText,
     this.onTap,
-    this.titleColor,
-    this.iconColor,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(14),
-        color: Theme.of(context).cardColor,
-      ),
-      child: ListTile(
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(18),
         onTap: onTap,
-        leading: Icon(icon, color: iconColor),
-        title: Text(
-          title,
-          style: TextStyle(fontWeight: FontWeight.w500, color: titleColor),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          child: Row(
+            children: [
+              Icon(icon, size: 22),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(title, style: const TextStyle(fontSize: 15)),
+              ),
+              if (trailingText != null)
+                Text(
+                  trailingText!,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              const SizedBox(width: 6),
+              const Icon(Icons.chevron_right),
+            ],
+          ),
         ),
-        trailing: trailing ?? const Icon(Icons.arrow_forward_ios, size: 16),
       ),
     );
   }

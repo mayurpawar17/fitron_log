@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/colors/app_colors.dart';
+import '../../../core/theme/app_colors.dart';
 
 class GoalCard extends StatelessWidget {
   const GoalCard({super.key});

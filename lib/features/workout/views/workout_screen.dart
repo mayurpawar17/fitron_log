@@ -84,14 +84,11 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (_) => const WorkoutHistoryScreen(),
-                ),
+                MaterialPageRoute(builder: (_) => const WorkoutHistoryScreen()),
               );
             },
           ),
         ],
-
       ),
 
       body: ListView(
@@ -102,8 +99,9 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
             final exercise = entry.value;
 
             return Theme(
-              data: Theme.of(context)
-                  .copyWith(dividerColor: Colors.transparent),
+              data: Theme.of(
+                context,
+              ).copyWith(dividerColor: Colors.transparent),
               child: ExpansionTile(
                 title: Text(exercise.name),
                 children: [
@@ -120,13 +118,11 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
         ],
       ),
 
-
       floatingActionButton: FloatingActionButton.extended(
         onPressed: addExercise,
         icon: const Icon(Icons.add),
         label: const Text('Add Exercise'),
       ),
-
 
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16),
@@ -138,13 +134,9 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
               borderRadius: BorderRadius.circular(16),
             ),
           ),
-          child: const Text(
-            'Save Workout',
-            style: TextStyle(fontSize: 16),
-          ),
+          child: const Text('Save Workout', style: TextStyle(fontSize: 16)),
         ),
       ),
-
     );
   }
 }
@@ -371,8 +363,6 @@ class WorkoutSetRow extends StatelessWidget {
     );
   }
 }
-
-
 
 // class WorkoutSetRow extends StatelessWidget {
 //   final int set;

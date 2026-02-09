@@ -13,11 +13,8 @@ class ComparePhotosScreen extends StatelessWidget {
 
   const ComparePhotosScreen({super.key, required this.photos});
 
-
   @override
   Widget build(BuildContext context) {
-
-
     final before = photos.last.front!;
     final after = photos.first.front!;
 

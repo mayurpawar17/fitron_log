@@ -9,16 +9,14 @@ class AddProgressPhotoSheet extends StatefulWidget {
   const AddProgressPhotoSheet({super.key, required this.onSaved});
 
   @override
-  State<AddProgressPhotoSheet> createState() =>
-      _AddProgressPhotoSheetState();
+  State<AddProgressPhotoSheet> createState() => _AddProgressPhotoSheetState();
 }
 
 class _AddProgressPhotoSheetState extends State<AddProgressPhotoSheet> {
   String? front, side, back;
 
   Future pick(Function(String) onPick) async {
-    final img =
-    await ImagePicker().pickImage(source: ImageSource.camera);
+    final img = await ImagePicker().pickImage(source: ImageSource.camera);
     if (img != null) {
       onPick(img.path);
       setState(() {});
@@ -28,8 +26,9 @@ class _AddProgressPhotoSheetState extends State<AddProgressPhotoSheet> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-      EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -55,19 +54,19 @@ class _AddProgressPhotoSheetState extends State<AddProgressPhotoSheet> {
               onPressed: front == null && side == null && back == null
                   ? null
                   : () async {
-                await ProgressPhotoDB.instance.insert(
-                  ProgressPhoto(
-                    date: DateTime.now(),
-                    front: front,
-                    side: side,
-                    back: back,
-                  ),
-                );
-                widget.onSaved();
-                Navigator.pop(context);
-              },
+                      await ProgressPhotoDB.instance.insert(
+                        ProgressPhoto(
+                          date: DateTime.now(),
+                          front: front,
+                          side: side,
+                          back: back,
+                        ),
+                      );
+                      widget.onSaved();
+                      Navigator.pop(context);
+                    },
               child: const Text("Save"),
-            )
+            ),
           ],
         ),
       ),

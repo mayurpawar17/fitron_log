@@ -5,7 +5,7 @@ import 'package:fitron_log/features/streak/views/streak_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:pedometer/pedometer.dart';
 
-import '../../../core/colors/app_colors.dart';
+import '../../../core/theme/app_colors.dart';
 import '../../../core/helperMethods/permissions.dart';
 import '../../progress_photos/views/progress_photo_screen.dart';
 import '../widgets/action_card.dart';

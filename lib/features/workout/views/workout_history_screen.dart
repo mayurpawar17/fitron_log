@@ -29,49 +29,49 @@ class _WorkoutHistoryScreenState extends State<WorkoutHistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Workout History'),actions: [
-        IconButton(
-          icon: const Icon(Icons.history),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const WorkoutHistoryScreen(),
-              ),
-            );
-          },
-        ),
-      ],
+      appBar: AppBar(
+        title: const Text('Workout History'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.history),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const WorkoutHistoryScreen()),
+              );
+            },
+          ),
+        ],
       ),
       body: loading
           ? const Center(child: CircularProgressIndicator())
           : workouts.isEmpty
           ? const Center(child: Text('No workouts logged yet 💪'))
           : ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: workouts.length,
-        itemBuilder: (_, i) {
-          final w = workouts[i];
-          return Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            margin: const EdgeInsets.only(bottom: 12),
-            child: ListTile(
-              leading: const Icon(Icons.fitness_center),
-              title: Text(_formatDate(w['date'])),
-              subtitle: Text(
-                '${w['exerciseCount']} exercises\n${w['notes'] ?? ''}',
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              onTap: () {
-                // Next: Workout Details screen
+              padding: const EdgeInsets.all(16),
+              itemCount: workouts.length,
+              itemBuilder: (_, i) {
+                final w = workouts[i];
+                return Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  margin: const EdgeInsets.only(bottom: 12),
+                  child: ListTile(
+                    leading: const Icon(Icons.fitness_center),
+                    title: Text(_formatDate(w['date'])),
+                    subtitle: Text(
+                      '${w['exerciseCount']} exercises\n${w['notes'] ?? ''}',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    onTap: () {
+                      // Next: Workout Details screen
+                    },
+                  ),
+                );
               },
             ),
-          );
-        },
-      ),
     );
   }
 

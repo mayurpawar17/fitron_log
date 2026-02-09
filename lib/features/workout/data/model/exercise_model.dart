@@ -2,10 +2,7 @@ class Exercise {
   String name;
   List<WorkoutSet> sets;
 
-  Exercise({
-    required this.name,
-    required this.sets,
-  });
+  Exercise({required this.name, required this.sets});
 }
 
 class WorkoutSet {
