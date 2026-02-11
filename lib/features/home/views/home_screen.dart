@@ -1,8 +1,7 @@
+import 'package:fitron_log/core/theme/app_colors.dart';
 import 'package:fitron_log/features/dashboard/views/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../../../main.dart';
-import '../../progress/views/progress_screen.dart';
 import '../../setting/views/settings_screen.dart';
 import '../../streak/views/streak_screen.dart';
 import '../../workout/views/workout_screen.dart';
@@ -36,9 +35,10 @@ class _HomeScreenState extends State<HomeScreen> {
         },
 
         height: 72,
-        backgroundColor: const Color(0xFF171A21),
+        // backgroundColor: const Color(0xFF171A21),
+        backgroundColor: AppColors.secondaryLightColor,
         // dark card
-        indicatorColor: Colors.greenAccent.withOpacity(0.15),
+        indicatorColor: AppColors.accent.withOpacity(0.15),
 
         destinations: const [
           NavigationDestination(

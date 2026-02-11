@@ -1,11 +1,8 @@
 import 'dart:io';
 
 import 'package:before_after/before_after.dart';
+import 'package:fitron_log/core/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../bloc/progress_photo_bloc.dart';
-import '../bloc/progress_photo_state.dart';
 import '../data/model/progress_photo.dart';
 
 class ComparePhotosScreen extends StatelessWidget {
@@ -19,7 +16,7 @@ class ComparePhotosScreen extends StatelessWidget {
     final after = photos.first.front!;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Before vs After')),
+      appBar: CustomAppBar(title: "Before vs After"),
       body: Padding(
         padding: const EdgeInsets.all(16),
 

@@ -1,3 +1,4 @@
+import 'package:fitron_log/core/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/settings_section.dart';
@@ -9,7 +10,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Profile")),
+      appBar: CustomAppBar(title: "Settings"),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: ListView(
@@ -37,6 +38,10 @@ class SettingsScreen extends StatelessWidget {
                 SettingsTile(
                   icon: Icons.alarm_outlined,
                   title: "Workout Reminders",
+                ),
+                SettingsTile(
+                  icon: Icons.alarm_outlined,
+                  title: "Workout History",
                 ),
               ],
             ),

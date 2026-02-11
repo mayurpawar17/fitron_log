@@ -1,4 +1,4 @@
-import 'package:fitron_log/features/workout/views/add_workout_screen.dart';
+import 'package:fitron_log/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 import './features/home/views/home_screen.dart';
@@ -15,8 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Fitron Log',
-      // theme: ThemeData(fontFamily: 'DroidSans'),
-      theme: ThemeData.dark(useMaterial3: true),
+      theme: AppTheme.lightTheme,
       home: const HomeScreen(),
     );
   }

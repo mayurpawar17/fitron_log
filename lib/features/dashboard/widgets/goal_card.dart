@@ -10,6 +10,7 @@ class GoalCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
+        color: AppColors.secondaryLightColor,
         borderRadius: BorderRadius.circular(16),
         gradient: LinearGradient(
           colors: [AppColors.accent.withOpacity(0.2), Colors.transparent],

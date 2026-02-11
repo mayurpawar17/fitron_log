@@ -14,7 +14,7 @@ class ActionCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppColors.card,
+          color: AppColors.secondaryLightColor,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:fitron_log/core/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../data/db/progress_photo_db.dart';
@@ -50,23 +51,21 @@ class _ProgressPhotoScreenState extends State<ProgressPhotoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Progress Photos"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.compare),
-            onPressed: photos.length < 2
-                ? null
-                : () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => ComparePhotosScreen(photos: photos),
-                      ),
-                    );
-                  },
-          ),
-        ],
+      appBar: CustomAppBar(
+        title: "Progress Photos",
+        action: IconButton(
+          icon: const Icon(Icons.compare),
+          onPressed: photos.length < 2
+              ? null
+              : () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ComparePhotosScreen(photos: photos),
+                    ),
+                  );
+                },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add_a_photo),

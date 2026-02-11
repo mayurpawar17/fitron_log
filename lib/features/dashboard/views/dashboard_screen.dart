@@ -1,11 +1,8 @@
 import 'dart:async';
 
-import 'package:fitron_log/features/progress/views/progress_photo_screen.dart';
-import 'package:fitron_log/features/streak/views/streak_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:pedometer/pedometer.dart';
 
-import '../../../core/theme/app_colors.dart';
 import '../../../core/helperMethods/permissions.dart';
 import '../../progress_photos/views/progress_photo_screen.dart';
 import '../widgets/action_card.dart';
@@ -60,7 +57,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.bg,
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(16),

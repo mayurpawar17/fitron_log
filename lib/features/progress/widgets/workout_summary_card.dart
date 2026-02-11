@@ -1,3 +1,4 @@
+import 'package:fitron_log/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class WorkoutSummaryCard extends StatelessWidget {
@@ -8,10 +9,9 @@ class WorkoutSummaryCard extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Container(
-      margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.secondaryLightColor,
         borderRadius: BorderRadius.circular(28),
         boxShadow: [
           BoxShadow(
@@ -33,7 +33,7 @@ class WorkoutSummaryCard extends StatelessWidget {
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF2EE6A6).withOpacity(0.15),
+                  color: AppColors.accent.withOpacity(0.15),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Row(
@@ -42,15 +42,11 @@ class WorkoutSummaryCard extends StatelessWidget {
                       "Leg Day",
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFF1DBF84),
+                        color: AppColors.accent,
                       ),
                     ),
                     SizedBox(width: 6),
-                    Icon(
-                      Icons.check_circle,
-                      size: 16,
-                      color: Color(0xFF1DBF84),
-                    ),
+                    Icon(Icons.check_circle, size: 16, color: AppColors.accent),
                   ],
                 ),
               ),
@@ -108,9 +104,7 @@ class WorkoutSummaryCard extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: 14),
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFF2EE6A6), Color(0xFF1DBF84)],
-              ),
+              color: AppColors.accent,
               borderRadius: BorderRadius.circular(24),
             ),
             child: const Center(

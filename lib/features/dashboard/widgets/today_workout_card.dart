@@ -10,7 +10,7 @@ class TodayWorkoutCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.card,
+        color: AppColors.secondaryLightColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(color: AppColors.accent.withOpacity(0.25), blurRadius: 24),
