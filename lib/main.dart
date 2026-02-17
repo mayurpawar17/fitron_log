@@ -1,4 +1,5 @@
 import 'package:fitron_log/core/theme/app_theme.dart';
+import 'package:fitron_log/features/onboarding/views/profile_onboarding_screen.dart';
 import 'package:flutter/material.dart';
 
 import './features/home/views/home_screen.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Fitron Log',
       theme: AppTheme.lightTheme,
-      home: const HomeScreen(),
+      home: const ProfileOnboardingScreen(),
     );
   }
 }
